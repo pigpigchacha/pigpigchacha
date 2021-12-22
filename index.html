@@ -13,7 +13,11 @@
     <div id="app">正在跳转中，请稍等片刻</div>
     <script>
       function good(){
-        window.location.assign("https://www.footballco2fun.com"+window.location.pathname.replace("/officialsite","")+window.location.search);
+        var path=window.location.pathname.replace("/officialsite","");
+        if (path == ""){
+            path = "/";
+        }
+        window.location.assign("https://www.footballco2fun.com"+ path +window.location.search);
       }
       good();
   </script>
