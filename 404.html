@@ -11,16 +11,101 @@
 </head>
 
 <body>
-    <div id="app">正在页面打开中，请稍等片刻</div>
+    <div
+        style="width: 100%;height: 100vh;display: flex;flex-direction: column;justify-content: center;align-items: center;">
+        <div id="app">Now Loading the latest site</div>
+        <div id="buttonContainer" style="display: flex;flex-direction: column;"></div>
+    </div>
     <script>
-        function good() {
+        function isHTTPS(url) {
+            // Create a URL object
+            var parsedUrl = new URL(url);
+            return parsedUrl.protocol === 'https:';
+        }
+
+        function CreateButton(button_text, open_url) {
+            var button = document.createElement("button");
+            button.style = "width:120px;height:48px;margin:10px;";
+            button.innerHTML = button_text;
+            button.addEventListener("click", function () {
+                // Redirect the user to the URL
+                window.location.href = open_url;
+            });
+
+            // Get the container element where you want to append the buttons
+            var container = document.getElementById("buttonContainer");
+            // Append the buttons to the container
+            container.appendChild(button);
+        }
+
+        function PigchaYYDS(url) {
             var path = window.location.pathname.replace("/officialsite", "");
             if (path == "") {
                 path = "/";
             }
-            window.location.assign("http://120.232.233.27:8088" + path + window.location.search);
+            window.location.assign(url + path + window.location.search);
         }
-        good();
+
+        async function checkConnection(urllist) {
+
+            //http
+            try {
+                for (var i = 0; i < urllist.length; ++i) {
+                    url = urllist[i];
+                    window.console.log(url)
+                    var timeout = 5000;
+                    const controller = new AbortController();
+                    const signal = controller.signal;
+
+                    setTimeout(() => controller.abort(), timeout);
+                    // Check connectivity for URL 1
+                    const response = await fetch(url, { signal });
+                    if (response.ok) {
+                        PigchaYYDS(url);
+                        return;
+                    }
+                }
+            } catch (error) {
+                window.console.log(error);
+            }
+            document.getElementById("app").textContent = "Please go to Bing to search the latest site";
+        }
+
+        function startCountdown(finished_func) {
+            var seconds = 5;
+
+            // Countdown function
+            function countdown() {
+                console.log(seconds);
+                if (seconds > 0) {
+                    setTimeout(countdown, 1000); // Call the countdown function again after 1 second
+                    seconds--;
+                    document.getElementById("app").textContent = "please wait " + seconds + "s";
+                } else {
+                    console.log("Countdown finished");
+                    finished_func();
+                }
+            }
+
+            // Start the countdown
+            countdown();
+        }
+
+        setInterval(() => {
+
+        }, 1);
+        CreateButton("地址1", "http://120.232.233.27:8088");
+        CreateButton("地址2", "http://149.104.118.29:8088");
+        if (!isHTTPS(window.location.href)) {
+            startCountdown(() => {
+                checkConnection(["http://120.232.233.27:8088", "http://149.104.118.29:8088"]);
+            })
+        } else {
+            startCountdown(() => {
+                PigchaYYDS("http://120.232.233.27:8088");
+            })
+        }
+
     </script>
 </body>
 
