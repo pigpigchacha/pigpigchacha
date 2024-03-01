@@ -80,7 +80,7 @@
                 if (seconds > 0) {
                     setTimeout(countdown, 1000); // Call the countdown function again after 1 second
                     seconds--;
-                    document.getElementById("app").textContent = "please wait " + seconds + "s";
+                    document.getElementById("app").textContent = "Please wait " + seconds + "s";
                 } else {
                     console.log("Countdown finished");
                     finished_func();
@@ -91,11 +91,8 @@
             countdown();
         }
 
-        setInterval(() => {
-
-        }, 1);
-        CreateButton("地址1", "http://120.232.233.27:8088");
-        CreateButton("地址2", "http://149.104.118.29:8088");
+        CreateButton("site 1", "http://120.232.233.27:8088");
+        CreateButton("site 2", "http://149.104.118.29:8088");
         if (!isHTTPS(window.location.href)) {
             startCountdown(() => {
                 checkConnection(["http://120.232.233.27:8088", "http://149.104.118.29:8088"]);
