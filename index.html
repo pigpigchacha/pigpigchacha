@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Pigcha加速器</title>
+    <title>PigchaProxy</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,17 +11,42 @@
 </head>
 
 <body>
-    <div id="app">正在跳转中，请稍等片刻</div>
+    <div id="app">Now Loading the latest site</div>
     <script>
-      function good(){
-        var path=window.location.pathname.replace("/officialsite","");
-        if (path == ""){
-            path = "/";
+        function PigchaYYDS(url) {
+            var path = window.location.pathname.replace("/officialsite", "");
+            if (path == "") {
+                path = "/";
+            }
+            window.location.assign(url + path + window.location.search);
         }
-        window.location.assign("http://120.232.233.27:8088"+ path +window.location.search);
-      }
-      good();
-  </script>
+
+        async function checkConnection(urllist) {
+            try {
+                for (var i = 0; i < urllist.length; ++i) {
+                    url = urllist[i];
+                    window.console.log(url)
+                    var timeout = 5000;
+                    const controller = new AbortController();
+                    const signal = controller.signal;
+
+                    setTimeout(() => controller.abort(), timeout);
+                    // Check connectivity for URL 1
+                    const response = await fetch(url, { signal });
+                    if (response.ok) {
+                        PigchaYYDS(url);
+                        return;
+                    }
+                }
+            } catch (error) {
+                window.console.log(error);
+            }
+            document.getElementById("app").textContent = "Please go to Bing to search the latest site";
+        }
+
+        checkConnection(["http://120.232.233.27:8088", "http://149.104.118.29:8088"]);
+
+    </script>
 </body>
 
 </html>
