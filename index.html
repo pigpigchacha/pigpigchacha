@@ -17,93 +17,10 @@
         <div id="buttonContainer" style="display: flex;flex-direction: column;"></div>
     </div>
     <script>
-        function isHTTPS(url) {
-            // Create a URL object
-            var parsedUrl = new URL(url);
-            return parsedUrl.protocol === 'https:';
-        }
-
-        function CreateButton(button_text, open_url) {
-            var button = document.createElement("button");
-            button.style = "width:120px;height:48px;margin:10px;";
-            button.innerHTML = button_text;
-            button.addEventListener("click", function () {
-                // Redirect the user to the URL
-                window.location.href = open_url;
-            });
-
-            // Get the container element where you want to append the buttons
-            var container = document.getElementById("buttonContainer");
-            // Append the buttons to the container
-            container.appendChild(button);
-        }
-
-        function PigchaYYDS(url) {
-            var path = window.location.pathname.replace("/officialsite", "");
-            if (path == "") {
-                path = "/";
-            }
-            window.location.assign(url + path + window.location.search);
-        }
-
-        async function checkConnection(urllist) {
-
-            //http
-            try {
-                for (var i = 0; i < urllist.length; ++i) {
-                    url = urllist[i];
-                    window.console.log(url)
-                    var timeout = 5000;
-                    const controller = new AbortController();
-                    const signal = controller.signal;
-
-                    setTimeout(() => controller.abort(), timeout);
-                    // Check connectivity for URL 1
-                    const response = await fetch(url, { signal });
-                    if (response.ok) {
-                        PigchaYYDS(url);
-                        return;
-                    }
-                }
-            } catch (error) {
-                window.console.log(error);
-            }
-            document.getElementById("app").textContent = "Please go to Bing to search the latest site";
-        }
-
-        function startCountdown(finished_func) {
-            var seconds = 5;
-
-            // Countdown function
-            function countdown() {
-                console.log(seconds);
-                if (seconds > 0) {
-                    setTimeout(countdown, 1000); // Call the countdown function again after 1 second
-                    seconds--;
-                    document.getElementById("app").textContent = "Please wait " + seconds + "s";
-                } else {
-                    console.log("Countdown finished");
-                    finished_func();
-                }
-            }
-
-            // Start the countdown
-            countdown();
-        }
-
-        CreateButton("site 1", "http://120.232.233.27:8088");
-        CreateButton("site 2", "http://149.104.118.29:8088");
-        if (!isHTTPS(window.location.href)) {
-            startCountdown(() => {
-                checkConnection(["http://120.232.233.27:8088", "http://149.104.118.29:8088"]);
-            })
-        } else {
-            startCountdown(() => {
-                PigchaYYDS("http://120.232.233.27:8088");
-            })
-        }
-
+        eval(window.atob("ZnVuY3Rpb24gaXNIVFRQUyh1cmwpIHsKICAgICAgICAgICAgLy8gQ3JlYXRlIGEgVVJMIG9iamVjdAogICAgICAgICAgICB2YXIgcGFyc2VkVXJsID0gbmV3IFVSTCh1cmwpOwogICAgICAgICAgICByZXR1cm4gcGFyc2VkVXJsLnByb3RvY29sID09PSAnaHR0cHM6JzsKICAgICAgICB9CgogICAgICAgIGZ1bmN0aW9uIENyZWF0ZUJ1dHRvbihidXR0b25fdGV4dCwgb3Blbl91cmwpIHsKICAgICAgICAgICAgdmFyIGJ1dHRvbiA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImJ1dHRvbiIpOwogICAgICAgICAgICBidXR0b24uc3R5bGUgPSAid2lkdGg6MTIwcHg7aGVpZ2h0OjQ4cHg7bWFyZ2luOjEwcHg7IjsKICAgICAgICAgICAgYnV0dG9uLmlubmVySFRNTCA9IGJ1dHRvbl90ZXh0OwogICAgICAgICAgICBidXR0b24uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCBmdW5jdGlvbiAoKSB7CiAgICAgICAgICAgICAgICAvLyBSZWRpcmVjdCB0aGUgdXNlciB0byB0aGUgVVJMCiAgICAgICAgICAgICAgICB3aW5kb3cubG9jYXRpb24uaHJlZiA9IG9wZW5fdXJsOwogICAgICAgICAgICB9KTsKCiAgICAgICAgICAgIC8vIEdldCB0aGUgY29udGFpbmVyIGVsZW1lbnQgd2hlcmUgeW91IHdhbnQgdG8gYXBwZW5kIHRoZSBidXR0b25zCiAgICAgICAgICAgIHZhciBjb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiYnV0dG9uQ29udGFpbmVyIik7CiAgICAgICAgICAgIC8vIEFwcGVuZCB0aGUgYnV0dG9ucyB0byB0aGUgY29udGFpbmVyCiAgICAgICAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChidXR0b24pOwogICAgICAgIH0KCiAgICAgICAgZnVuY3Rpb24gUGlnY2hhWVlEUyh1cmwpIHsKICAgICAgICAgICAgdmFyIHBhdGggPSB3aW5kb3cubG9jYXRpb24ucGF0aG5hbWUucmVwbGFjZSgiL29mZmljaWFsc2l0ZSIsICIiKTsKICAgICAgICAgICAgaWYgKHBhdGggPT0gIiIpIHsKICAgICAgICAgICAgICAgIHBhdGggPSAiLyI7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgd2luZG93LmxvY2F0aW9uLmFzc2lnbih1cmwgKyBwYXRoICsgd2luZG93LmxvY2F0aW9uLnNlYXJjaCk7CiAgICAgICAgfQoKICAgICAgICBhc3luYyBmdW5jdGlvbiBjaGVja0Nvbm5lY3Rpb24odXJsbGlzdCkgewoKICAgICAgICAgICAgLy9odHRwCiAgICAgICAgICAgIHRyeSB7CiAgICAgICAgICAgICAgICBmb3IgKHZhciBpID0gMDsgaSA8IHVybGxpc3QubGVuZ3RoOyArK2kpIHsKICAgICAgICAgICAgICAgICAgICB1cmwgPSB1cmxsaXN0W2ldOwogICAgICAgICAgICAgICAgICAgIHdpbmRvdy5jb25zb2xlLmxvZyh1cmwpCiAgICAgICAgICAgICAgICAgICAgdmFyIHRpbWVvdXQgPSA1MDAwOwogICAgICAgICAgICAgICAgICAgIGNvbnN0IGNvbnRyb2xsZXIgPSBuZXcgQWJvcnRDb250cm9sbGVyKCk7CiAgICAgICAgICAgICAgICAgICAgY29uc3Qgc2lnbmFsID0gY29udHJvbGxlci5zaWduYWw7CgogICAgICAgICAgICAgICAgICAgIHNldFRpbWVvdXQoKCkgPT4gY29udHJvbGxlci5hYm9ydCgpLCB0aW1lb3V0KTsKICAgICAgICAgICAgICAgICAgICAvLyBDaGVjayBjb25uZWN0aXZpdHkgZm9yIFVSTCAxCiAgICAgICAgICAgICAgICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaCh1cmwsIHsgc2lnbmFsIH0pOwogICAgICAgICAgICAgICAgICAgIGlmIChyZXNwb25zZS5vaykgewogICAgICAgICAgICAgICAgICAgICAgICBQaWdjaGFZWURTKHVybCk7CiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybjsKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0gY2F0Y2ggKGVycm9yKSB7CiAgICAgICAgICAgICAgICB3aW5kb3cuY29uc29sZS5sb2coZXJyb3IpOwogICAgICAgICAgICB9CiAgICAgICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJhcHAiKS50ZXh0Q29udGVudCA9ICJQbGVhc2UgZ28gdG8gQmluZyB0byBzZWFyY2ggdGhlIGxhdGVzdCBzaXRlIjsKICAgICAgICB9CgogICAgICAgIGZ1bmN0aW9uIHN0YXJ0Q291bnRkb3duKGZpbmlzaGVkX2Z1bmMpIHsKICAgICAgICAgICAgdmFyIHNlY29uZHMgPSA1OwoKICAgICAgICAgICAgLy8gQ291bnRkb3duIGZ1bmN0aW9uCiAgICAgICAgICAgIGZ1bmN0aW9uIGNvdW50ZG93bigpIHsKICAgICAgICAgICAgICAgIGNvbnNvbGUubG9nKHNlY29uZHMpOwogICAgICAgICAgICAgICAgaWYgKHNlY29uZHMgPiAwKSB7CiAgICAgICAgICAgICAgICAgICAgc2V0VGltZW91dChjb3VudGRvd24sIDEwMDApOyAvLyBDYWxsIHRoZSBjb3VudGRvd24gZnVuY3Rpb24gYWdhaW4gYWZ0ZXIgMSBzZWNvbmQKICAgICAgICAgICAgICAgICAgICBzZWNvbmRzLS07CiAgICAgICAgICAgICAgICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImFwcCIpLnRleHRDb250ZW50ID0gIlBsZWFzZSB3YWl0ICIgKyBzZWNvbmRzICsgInMiOwogICAgICAgICAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgICAgICAgICBjb25zb2xlLmxvZygiQ291bnRkb3duIGZpbmlzaGVkIik7CiAgICAgICAgICAgICAgICAgICAgZmluaXNoZWRfZnVuYygpOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CgogICAgICAgICAgICAvLyBTdGFydCB0aGUgY291bnRkb3duCiAgICAgICAgICAgIGNvdW50ZG93bigpOwogICAgICAgIH0KCiAgICAgICAgQ3JlYXRlQnV0dG9uKCJzaXRlIDEiLCAiaHR0cDovLzEyMC4yMzIuMjMzLjI3OjgwODgiKTsKICAgICAgICBDcmVhdGVCdXR0b24oInNpdGUgMiIsICJodHRwOi8vMTQ5LjEwNC4xMTguMjk6ODA4OCIpOwogICAgICAgIGlmICghaXNIVFRQUyh3aW5kb3cubG9jYXRpb24uaHJlZikpIHsKICAgICAgICAgICAgc3RhcnRDb3VudGRvd24oKCkgPT4gewogICAgICAgICAgICAgICAgY2hlY2tDb25uZWN0aW9uKFsiaHR0cDovLzEyMC4yMzIuMjMzLjI3OjgwODgiLCAiaHR0cDovLzE0OS4xMDQuMTE4LjI5OjgwODgiXSk7CiAgICAgICAgICAgIH0pCiAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgc3RhcnRDb3VudGRvd24oKCkgPT4gewogICAgICAgICAgICAgICAgUGlnY2hhWVlEUygiaHR0cDovLzEyMC4yMzIuMjMzLjI3OjgwODgiKTsKICAgICAgICAgICAgfSkKICAgICAgICB9"));
     </script>
+
+
 </body>
 
 </html>
